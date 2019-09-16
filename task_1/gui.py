@@ -85,7 +85,7 @@ class Fields:
 		if self.ALLOWED_HEIGHT_VAR.get() == '':
 			return False
 		try:
-			self.allowed_height = int(self.ALLOWED_HEIGHT_VAR.get())
+			self.allowed_height = float(self.ALLOWED_HEIGHT_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Допустима висота має бути числом")
@@ -95,7 +95,7 @@ class Fields:
 		if self.FOCUS_DISTANCE_VAR.get() == '':
 			return False
 		try:
-			self.focus_distance = int(self.FOCUS_DISTANCE_VAR.get())
+			self.focus_distance = float(self.FOCUS_DISTANCE_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Фокусна відстань має бути числом")
@@ -105,7 +105,7 @@ class Fields:
 		if self.MATRIX_WIDTH_VAR.get() == '':
 			return False
 		try:
-			self.matrix_width = int(self.MATRIX_WIDTH_VAR.get())
+			self.matrix_width = float(self.MATRIX_WIDTH_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Ширина фотосенсору має бути числом")
@@ -115,7 +115,7 @@ class Fields:
 		if self.MATRIX_LENGTH_VAR.get() == '':
 			return False
 		try:
-			self.matrix_length = int(self.MATRIX_LENGTH_VAR.get())
+			self.matrix_length = float(self.MATRIX_LENGTH_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Довжина фотосенсору має бути числом")
@@ -125,7 +125,7 @@ class Fields:
 		if self.BATTERY_FLIGHT_SPENDING_VAR.get() == '':
 			return False
 		try:
-			self.battery_flight_spending = int(self.BATTERY_FLIGHT_SPENDING_VAR.get())
+			self.battery_flight_spending = float(self.BATTERY_FLIGHT_SPENDING_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Витрати заряду на політ має бути числом")
@@ -135,7 +135,7 @@ class Fields:
 		if self.BATTERY_PHOTO_SPENDING_VAR.get() == '':
 			return False
 		try:
-			self.battery_photo_spending = int(self.BATTERY_PHOTO_SPENDING_VAR.get())
+			self.battery_photo_spending = float(self.BATTERY_PHOTO_SPENDING_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Витрати заряду на фото має бути числом")
@@ -145,7 +145,7 @@ class Fields:
 		if self.TERRITORY_LENGTH_VAR.get() == '':
 			return False
 		try:
-			self.territory_length = int(self.TERRITORY_LENGTH_VAR.get())
+			self.territory_length = float(self.TERRITORY_LENGTH_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Довжина території має бути числом")
@@ -155,7 +155,7 @@ class Fields:
 		if self.TERRITORY_WIDTH_VAR.get() == '':
 			return False
 		try:
-			self.territory_width = int(self.TERRITORY_WIDTH_VAR.get())
+			self.territory_width = float(self.TERRITORY_WIDTH_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Ширина території має бути числом")
@@ -165,7 +165,7 @@ class Fields:
 		if self.BATTERY_VAR.get() == '':
 			return False
 		try:
-			self.battery = int(self.BATTERY_VAR.get())
+			self.battery = float(self.BATTERY_VAR.get().replace(',', '.'))
 			return True
 		except ValueError:
 			messagebox.showinfo("Помилка", "Значення заряду має бути числом")
@@ -179,4 +179,3 @@ class Fields:
 
 fields = Fields()
 w_parametrs.protocol("WM_DELETE_WINDOW", exit)
-w_parametrs.mainloop()
