@@ -10,42 +10,42 @@ w_parametrs.resizable(width=False, height=False)
 class Fields:
 
 	ALLOWED_HEIGHT_VAR = StringVar()
-	ALLOWED_HEIGHT_LABEL = Label(w_parametrs, text='доп. висота польоту (м):', font='19')
+	ALLOWED_HEIGHT_LABEL = Label(w_parametrs, text='доп. висота польоту (м):', font=("Times New Roman", 15, 'bold'))
 	ALLOWED_HEIGHT_ENTRY = Entry(w_parametrs, width=25, textvar=ALLOWED_HEIGHT_VAR, font=("Times New Roman", 15))
 
 	FOCUS_DISTANCE_VAR = StringVar()
-	FOCUS_DISTANCE_LABEL = Label(w_parametrs, text='фок. відстань (мм):', font='19')
+	FOCUS_DISTANCE_LABEL = Label(w_parametrs, text='фок. відстань (мм):', font=("Times New Roman", 15, 'bold'))
 	FOCUS_DISTANCE_ENTRY = Entry(w_parametrs, width=25, textvar=FOCUS_DISTANCE_VAR, font=("Times New Roman", 15))
 
 	MATRIX_WIDTH_VAR = StringVar()
-	MATRIX_WIDTH_LABEL = Label(w_parametrs, text='ширина фотосенсору (мм):', font='19')
+	MATRIX_WIDTH_LABEL = Label(w_parametrs, text='ширина фотосенсору (мм):', font=("Times New Roman", 15, 'bold'))
 	MATRIX_WIDTH_ENTRY = Entry(w_parametrs, width=25, textvar=MATRIX_WIDTH_VAR, font=("Times New Roman", 15))
 
 	MATRIX_LENGTH_VAR = StringVar()
-	MATRIX_LENGTH_LABEL = Label(w_parametrs, text='довжина фотосенсору (мм):', font='19')
+	MATRIX_LENGTH_LABEL = Label(w_parametrs, text='довжина фотосенсору (мм):', font=("Times New Roman", 15, 'bold'))
 	MATRIX_LENGTH_ENTRY = Entry(w_parametrs, width=25, textvar=MATRIX_LENGTH_VAR, font=("Times New Roman", 15))
 
 	BATTERY_VAR = StringVar()
-	BATTERY_LABEL = Label(w_parametrs, text='заряд батареї (%):', font='19')
+	BATTERY_LABEL = Label(w_parametrs, text='заряд батареї (%):', font=("Times New Roman", 15, 'bold'))
 	BATTERY_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_VAR, font=("Times New Roman", 15))
 
 	BATTERY_PHOTO_SPENDING_VAR = StringVar()
-	BATTERY_PHOTO_SPENDING_LABEL = Label(w_parametrs, text='витрати заряду на фото (%):', font='19')
+	BATTERY_PHOTO_SPENDING_LABEL = Label(w_parametrs, text='витрати заряду на фото (%):', font=("Times New Roman", 15, 'bold'))
 	BATTERY_PHOTO_SPENDING_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_PHOTO_SPENDING_VAR, font=("Times New Roman", 15))
 
 	BATTERY_FLIGHT_SPENDING_VAR = StringVar()
-	BATTERY_FLIGHT_SPENDING_LABEL = Label(w_parametrs, text='витрати заряду на політ (%):', font='19')
+	BATTERY_FLIGHT_SPENDING_LABEL = Label(w_parametrs, text='витрати заряду на політ (%/м):', font=("Times New Roman", 15, 'bold'))
 	BATTERY_FLIGHT_SPENDING_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_FLIGHT_SPENDING_VAR, font=("Times New Roman", 15))
 
 	TERRITORY_WIDTH_VAR = StringVar()
-	TERRITORY_WIDTH_LABEL = Label(w_parametrs, text='ширина території (м):', font='19')
+	TERRITORY_WIDTH_LABEL = Label(w_parametrs, text='ширина території (м):', font=("Times New Roman", 15, 'bold'))
 	TERRITORY_WIDTH_ENTRY = Entry(w_parametrs, width=25, textvar=TERRITORY_WIDTH_VAR, font=("Times New Roman", 15))
 
 	TERRITORY_LENGTH_VAR = StringVar()
-	TERRITORY_LENGTH_LABEL = Label(w_parametrs, text='довжина території (м):', font='19')
+	TERRITORY_LENGTH_LABEL = Label(w_parametrs, text='довжина території (м):', font=("Times New Roman", 15, 'bold'))
 	TERRITORY_LENGTH_ENTRY = Entry(w_parametrs, width=25, textvar=TERRITORY_LENGTH_VAR, font=("Times New Roman", 15))
 
-	CALCULATE_BUTTON = Button(w_parametrs, text='Продовжити', font=19) # background='#008000'
+	CALCULATE_BUTTON = Button(w_parametrs, text='Продовжити', font=("Times New Roman", 15)) # background='#008000'
 
 	def __init__(self):
 
