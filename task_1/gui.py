@@ -47,6 +47,7 @@ class Fields:
 
     CALCULATE_BUTTON = Button(w_parametrs, text='Продовжити', font=19) # background='#008000'
 
+
     def __init__(self):
 
         self.CALCULATE_BUTTON.bind('<Button-1>', self.calculate)
