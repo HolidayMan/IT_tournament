@@ -3,8 +3,8 @@ import gui
 from gui import fields
 from threading import Thread
 from math import ceil
-from math_functions import Vector, export_coordinates
-from collections import namedtuple
+from math_functions import Vector, export_cordinates, Point, calculate_move_vector
+
 
 # gui.w_parametrs.mainloop()
 
@@ -24,9 +24,9 @@ fields.battery_flight_spending = 0.01
 fields.battery_photo_spending = 0.2
 fields.territory_width = 200
 fields.territory_length = 500
-fields.battery = 100
+fields.battery = 1000
 
-Point = namedtuple('Point', ['x', 'y', 'color'])
+
 
 base = Point(50, 50, GREY)
 
@@ -52,8 +52,8 @@ K_PH = PH_P * KP # кол-во фото
 
 bph_all = K_PH*(bph+bfl) # затраты на фото
 
-x1 = L2/2 + base.x
-y1 = L1/2 + base.y
+x1 = L2/2 + 50
+y1 = L1/2 + 50
 x2 = x1 + L2*(KP-1)
 y2 = y1
 x3 = x2
@@ -74,23 +74,32 @@ if b_all > b:
     print('Unreal task')
     exit()
 
-coordinates = []
+cordinates = [base]
 
-coordinates.append(base)
+smv, s_dots_amount = calculate_move_vector(s, 10)
 
+cordinates.extend([Point(int(base.x+smv.x*i), int(base.y+smv.y*i), RED) for i in range(1, s_dots_amount+1)])
+
+dots_in_the_middle_y = int(L1 / 10)
+dots_in_the_middle_x = int(L2/11)
 for i in range(KP):
-    for j in range(PH_P*2-1):
-        coordinates.append(Point(int(x1+L2*i), int(y1+L1/2*j), RED if j % 2 == 1 else BLUE))
+    for j in range(PH_P*dots_in_the_middle_y-(dots_in_the_middle_y-1)):
+        cordinates.append(Point(int(x1+L2*i), int(y1+L1/dots_in_the_middle_y*j), RED if j % dots_in_the_middle_y != 0 else BLUE))
     if i < KP-1:
         j = j if i % 2 == 0 else 0
-        for k in range(1, 3):
-            coordinates.append(Point(int(x1+L2*i+(L2/3*k)), int(y1+L1/2*j), RED))
 
+        for k in range(1, dots_in_the_middle_x):
+            cordinates.append(Point(int(x1+L2*i+(L2/dots_in_the_middle_x*k)), int(y1+L1/dots_in_the_middle_y*j), RED))
 
+end_point = cordinates[-(PH_P*dots_in_the_middle_y-(dots_in_the_middle_y-1))]
+emv, e_dots_amount = calculate_move_vector(e, 10)
+cordinates.extend([Point(int(end_point.x+emv.x*i), int(end_point.y+emv.y*i), RED) for i in range(1, e_dots_amount)])
+cordinates.append(base)
+export_cordinates(cordinates)
 
 pygame.init()
 
-size = (int(l1 + base.x + 300), int(l2 + base.y + 200))
+size = (int(l1 + 50 + 300), int(l2 + 50 + 200))
 
 screen = pygame.display.set_mode(size)
 # bg = pygame.image.load("Droneshot.JPG")
@@ -108,9 +117,9 @@ clock = pygame.time.Clock()
 
 while not done:
     screen.fill(WHITE)
-    pygame.draw.rect(screen, (0, 255, 0 ), (int(base.x), int(base.y), int(l1), int(l2)))
+    pygame.draw.rect(screen, (0, 255, 0 ), (50, 50, int(l1), int(l2)))
     pygame.draw.circle(screen, base.color, (base.x, base.y), 4)
-    for point in coordinates[1:]:
+    for point in cordinates[1:]:
         pygame.draw.circle(screen, point.color, (point.x, point.y), 2)
     # screen.blit(bg(0,0))
     for event in pygame.event.get():

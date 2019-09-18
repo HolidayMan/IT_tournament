@@ -33,7 +33,7 @@ class Vector:
         return Vector(int(self.x * scalar), int(self.y * scalar))
 
 
-def export_coordinates(coordinates):
+def export_cordinates(coordinates):
     with open('coordinates.csv', 'w') as file:
         writer = csv.writer(file)
         writer.writerow(('x', 'y'))
