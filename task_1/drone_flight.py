@@ -5,8 +5,9 @@ from threading import Thread
 from math import ceil
 from math_functions import Vector, export_cordinates, Point, calculate_move_vector
 from map_building import Map
+import os
 
-gui.w_parametrs.mainloop()
+# gui.w_parametrs.mainloop()
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -17,17 +18,19 @@ GREEN = (0,128,0)
 BLUE = (0, 0, 255)
 ORANGE = (255, 165, 0)
 YELLOW = (255, 255, 0)
+AMARANT_MAGENTA = (223, 48, 214)
+CYAN = (48, 218, 223)
 
 
-# fields.allowed_height = 50
-# fields.focus_distance = 4
-# fields.matrix_width = 4
-# fields.matrix_length = 3
-# fields.battery_flight_spending = 0.01
-# fields.battery_photo_spending = 0.2
-# fields.territory_width = 200
-# fields.territory_length =500
-# fields.battery = 100
+fields.allowed_height = 50
+fields.focus_distance = 4
+fields.matrix_width = 4
+fields.matrix_length = 3
+fields.battery_flight_spending = 0.01
+fields.battery_photo_spending = 0.2
+fields.territory_width = 300
+fields.territory_length = 125
+fields.battery = 100
 
 
 class Drone:
@@ -38,22 +41,22 @@ class Drone:
         self.battery = battery
 
     def construction(self):
-            pygame.draw.rect(screen,GREY, [self.x-5, self.y-5,10, 10], 2)
-            pygame.draw.line(screen, GREY, [self.x-10, self.y-10], [self.x+10, self.y+10], 3)
-            pygame.draw.line(screen, GREY, [self.x-10, self.y+10], [self.x+10, self.y-10], 3)
+            pygame.draw.rect(screen,CYAN, [self.x-5, self.y-5,10, 10], 2)
+            pygame.draw.line(screen, CYAN, [self.x-10, self.y-10], [self.x+10, self.y+10], 3)
+            pygame.draw.line(screen, CYAN, [self.x-10, self.y+10], [self.x+10, self.y-10], 3)
             for i in range(3):
-                pygame.draw.ellipse(screen, GREY, [(self.x-14)-(i*2), (self.y-14)-(i*2), 10+(i*4), 10+(i*4)], 1)
+                pygame.draw.ellipse(screen, AMARANT_MAGENTA, [(self.x-14)-(i*2), (self.y-14)-(i*2), 10+(i*4), 10+(i*4)], 1)
             for i in range(3):
-                pygame.draw.ellipse(screen, GREY, [(self.x+7)-(i*2), (self.y+7)-(i*2), 10+(i*4), 10+(i*4)], 1)
+                pygame.draw.ellipse(screen, AMARANT_MAGENTA, [(self.x+7)-(i*2), (self.y+7)-(i*2), 10+(i*4), 10+(i*4)], 1)
             for i in range(3):
-                pygame.draw.ellipse(screen, GREY, [(self.x-14)-(i*2), (self.y+7)-(i*2), 10+(i*4), 10+(i*4)], 1)
+                pygame.draw.ellipse(screen, AMARANT_MAGENTA, [(self.x-14)-(i*2), (self.y+7)-(i*2), 10+(i*4), 10+(i*4)], 1)
             for i in range(3):
-                pygame.draw.ellipse(screen, GREY, [(self.x+7)-(i*2), (self.y-14)-(i*2), 10+(i*4), 10+(i*4)], 1)
+                pygame.draw.ellipse(screen, AMARANT_MAGENTA, [(self.x+7)-(i*2), (self.y-14)-(i*2), 10+(i*4), 10+(i*4)], 1)
 
 
     def move(self, v):
-        self.x = int(self.x + v.x)
-        self.y = int(self.y + v.y)
+        self.x = ceil(self.x + v.x) if v.x > 0 else int(self.x + v.x)
+        self.y = ceil(self.y + v.y) if v.y > 0 else int(self.y + v.y)
         self.battery -= fields.battery_flight_spending * abs(v)
 
 
@@ -86,8 +89,7 @@ y1 = L1/2 + 50
 x2 = x1 + L2*(KP-1)
 y2 = y1
 x3 = x2
-y3 = y1 + L1 * PH_P
-
+y3 = y1 + L1 * PH_P - L1
 
 
 s = Vector(x1-base.x, y1-base.y)
@@ -97,7 +99,6 @@ l_all = 2*h + abs(s) + L1 * PH_P * KP + L2 * (KP - 1) + abs(e)
 bfl_all = l_all * bfl
 
 b_all = bph_all + bfl_all
-
 
 if b_all > b:
     print('Unreal task')
@@ -112,6 +113,7 @@ cordinates.extend([Point(int(base.x+smv.x*i), int(base.y+smv.y*i), BLACK) for i 
 dots_in_the_middle_y = int(L1 / 10)
 dots_in_the_middle_x = int(L2/11)
 
+
 PHOTO_DOTS_COLOR = ORANGE
 PATH_DOTS_COLOR = YELLOW
 for i in range(KP):
@@ -122,6 +124,7 @@ for i in range(KP):
         j = j if i % 2 == 0 else 0
         for k in range(1, dots_in_the_middle_x):
             cordinates.append(Point(int(x1+L2*i+(L2/dots_in_the_middle_x*k)), int(y1+L1/dots_in_the_middle_y*j), PATH_DOTS_COLOR))
+
 
 end_point = cordinates[-1]
 emv, e_dots_amount = calculate_move_vector(e, 10)
@@ -148,9 +151,14 @@ drone = Drone(screen, (base.x, base.y), fields.battery)
 
 
 pygame.font.init()
-myfont = pygame.font.SysFont('Comic Sans MS', 30)
+comic_sans_font = pygame.font.SysFont('Comic Sans MS', 30)
+arial_font = pygame.font.SysFont('Arial', 15)
+battery_surface = comic_sans_font.render(str(round(drone.battery, 2)), False, (0, 0, 0))
+photo_amount_surface = arial_font.render(f'дрон зробить {K_PH} фото', False, (0, 0, 0))
+dron_flight_amount_surface = arial_font.render(f'дрон пролетить {round(l_all, 1)} метрів', False, (0, 0, 0))
+battery_amount_surface = arial_font.render(f'дрон витратить {round(b_all, 2)}% заряду', False, (0, 0, 0))
+photo_frequency_surface = arial_font.render(f'частота спрацювання затвору: 1/{round(L1, 1)} (фото/метр)', False, (0, 0, 0))
 
-battery_surface = myfont.render(str(round(drone.battery, 2)), False, (0, 0, 0))
 
 
 def photo(point: Point):
@@ -164,7 +172,7 @@ def draw_battery_rect(surface, battery_start, battery_amount, start_cord, max_wi
         color = (255, 255, 0)
     elif 70 <= battery_amount <= 100:
         color = (0, 255, 0)
-    l = int(max_width - max_width * ((battery_start-battery_amount)/100))
+    l = int(max_width - (max_width-max_width * (battery_amount/100)))
     pygame.draw.rect(surface, color, start_cord+(l, length))
 
 
@@ -178,17 +186,28 @@ points = (point for point in cordinates)
 point1 = points.__next__()
 point2 = points.__next__()
 move = True
-dmv, points_in_the_middle = calculate_move_vector(Vector(int(point2.x - point1.x), int(point2.y - point1.y)), 2)
+dmv, points_in_the_middle = calculate_move_vector(Vector(point2.x - point1.x, point2.y - point1.y), 2)
 photographing = False
 photo_times = 0
 
 photos_made = 0
+
+takeoff = True
+takeofftimes = 0
+landing = False
+landingtimes = 0
 
 while not done:
     map_surface = pygame.image.load('map.jpg')
     screen.fill(WHITE)
     screen.blit(map_surface, ((l1+150, 200)))
     screen.blit(territory_surface, (50, 50))
+
+    screen.blit(photo_amount_surface, (30, l2+120))
+    screen.blit(dron_flight_amount_surface, (30, l2+150))
+    screen.blit(battery_amount_surface, (30, l2+180))
+    screen.blit(photo_frequency_surface, (30, l2+210))
+
     pygame.draw.circle(screen, base.color, (base.x, base.y), 4)
     for point in cordinates[1:]:
         pygame.draw.circle(screen, point.color, (point.x, point.y), 4 if point.color == PHOTO_DOTS_COLOR else 2)
@@ -197,6 +216,20 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
     if not done2:
+        if takeoff:
+            if takeofftimes == 50:
+                takeoff = False
+                takeofftimes = 0
+            drone.battery -= fields.battery_flight_spending
+            takeofftimes += 1
+        if landing:
+            if landingtimes == 50:
+                done2 = True
+                landing = False
+                move = False
+                landingtimes = 0
+            drone.battery -= fields.battery_flight_spending
+            landingtimes += 1
         if move:
             if not photographing:
                 if ((dmv.x < 0 and drone.x > point2.x) or (dmv.x > 0 and drone.x < point2.x)) or \
@@ -207,14 +240,13 @@ while not done:
                     drone.move(dmv)
                 else:
                     if point2 == cordinates[-1]:
-                        done2 = True
+                        landing = True
                     else:
                         drone.move(Vector(point2.x - drone.x, point2.y-drone.y))
                         point1 = point2
                         point2 = points.__next__()
 
-                        
-                    dmv, points_in_the_middle = calculate_move_vector(Vector(int(point2.x - point1.x), int(point2.y - point1.y)), 2)
+                    dmv, points_in_the_middle = calculate_move_vector(Vector(point2.x - point1.x, point2.y - point1.y), 2)
                     if point1.color == PHOTO_DOTS_COLOR:
                         photographing = True
                         drone.battery -= fields.battery_photo_spending
@@ -232,14 +264,18 @@ while not done:
 
     move = not move
 
-    battery_surface = myfont.render(f'заряд батареї: {round(drone.battery, 2)}%', False, (0, 0, 0))
+    battery_surface = comic_sans_font.render(f'заряд батареї: {round(drone.battery, 2)}%', False, (0, 0, 0))
     screen.blit(battery_surface, (l1 + 150, 50))
     pygame.draw.rect(screen, BLACK, (l1+148, 78, 227, 53), 2)
     draw_battery_rect(screen, fields.battery, drone.battery, (l1+150, 80), 225, 50)
 
-    photos_made_surface = myfont.render(f'фото зроблено: {photos_made}', False, (0, 0, 0))
+    photos_made_surface = comic_sans_font.render(f'фото зроблено: {photos_made}', False, (0, 0, 0))
     screen.blit(photos_made_surface, (l1 + 150, 150))
 
     pygame.display.flip()
     clock.tick(60)
+
 pygame.quit()
+
+os.remove('territory.jpg')
+os.remove('map.jpg')
