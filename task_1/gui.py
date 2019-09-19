@@ -25,25 +25,25 @@ class Fields:
     MATRIX_LENGTH_LABEL = Label(w_parametrs, text='довжина фотосенсору (мм):', font='19')
     MATRIX_LENGTH_ENTRY = Entry(w_parametrs, width=25, textvar=MATRIX_LENGTH_VAR, font=("Times New Roman", 15))
 
-    BATTERY_VAR = StringVar()
-    BATTERY_LABEL = Label(w_parametrs, text='заряд батареї (%):', font='19')
-    BATTERY_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_VAR, font=("Times New Roman", 15))
+    BATTERY_FLIGHT_SPENDING_VAR = StringVar()
+    BATTERY_FLIGHT_SPENDING_LABEL = Label(w_parametrs, text='витрати заряду на політ (%/м):', font='19')
+    BATTERY_FLIGHT_SPENDING_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_FLIGHT_SPENDING_VAR, font=("Times New Roman", 15))
 
     BATTERY_PHOTO_SPENDING_VAR = StringVar()
     BATTERY_PHOTO_SPENDING_LABEL = Label(w_parametrs, text='витрати заряду на фото (%):', font='19')
     BATTERY_PHOTO_SPENDING_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_PHOTO_SPENDING_VAR, font=("Times New Roman", 15))
 
-    BATTERY_FLIGHT_SPENDING_VAR = StringVar()
-    BATTERY_FLIGHT_SPENDING_LABEL = Label(w_parametrs, text='витрати заряду на політ (%/м):', font='19')
-    BATTERY_FLIGHT_SPENDING_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_FLIGHT_SPENDING_VAR, font=("Times New Roman", 15))
+    TERRITORY_LENGTH_VAR = StringVar()
+    TERRITORY_LENGTH_LABEL = Label(w_parametrs, text='довжина території (м):', font='19')
+    TERRITORY_LENGTH_ENTRY = Entry(w_parametrs, width=25, textvar=TERRITORY_LENGTH_VAR, font=("Times New Roman", 15))
 
     TERRITORY_WIDTH_VAR = StringVar()
     TERRITORY_WIDTH_LABEL = Label(w_parametrs, text='ширина території (м):', font='19')
     TERRITORY_WIDTH_ENTRY = Entry(w_parametrs, width=25, textvar=TERRITORY_WIDTH_VAR, font=("Times New Roman", 15))
 
-    TERRITORY_LENGTH_VAR = StringVar()
-    TERRITORY_LENGTH_LABEL = Label(w_parametrs, text='довжина території (м):', font='19')
-    TERRITORY_LENGTH_ENTRY = Entry(w_parametrs, width=25, textvar=TERRITORY_LENGTH_VAR, font=("Times New Roman", 15))
+    BATTERY_VAR = StringVar()
+    BATTERY_LABEL = Label(w_parametrs, text='заряд батареї (%):', font='19')
+    BATTERY_ENTRY = Entry(w_parametrs, width=25, textvar=BATTERY_VAR, font=("Times New Roman", 15))
 
     CALCULATE_BUTTON = Button(w_parametrs, text='Продовжити', font=19) # background='#008000'
 
@@ -87,7 +87,9 @@ class Fields:
             return False
         try:
             self.allowed_height = float(self.ALLOWED_HEIGHT_VAR.get().replace(',', '.'))
-            return True
+            if 4 < self.allowed_height < 501:
+                return True
+            messagebox.showinfo("Помилка", "Допустима висота для зйомки має бути в межах від 5 до 500 метрів")
         except ValueError:
             messagebox.showinfo("Помилка", "Допустима висота має бути числом")
 
@@ -97,7 +99,9 @@ class Fields:
             return False
         try:
             self.focus_distance = float(self.FOCUS_DISTANCE_VAR.get().replace(',', '.'))
-            return True
+            if 1 < self.focus_distance < 9:
+                return True
+            messagebox.showinfo("Помилка", "Фокусна відстань для зйомки має бути в межах від 2 до 8 міліметрів")
         except ValueError:
             messagebox.showinfo("Помилка", "Фокусна відстань має бути числом")
 
@@ -107,7 +111,9 @@ class Fields:
             return False
         try:
             self.matrix_width = float(self.MATRIX_WIDTH_VAR.get().replace(',', '.'))
-            return True
+            if 1 < self.matrix_width < 36:
+                return True
+            messagebox.showinfo("Помилка", "Ширина матриці має бути в межах від 2 до 35 міліметрів")
         except ValueError:
             messagebox.showinfo("Помилка", "Ширина фотосенсору має бути числом")
 
@@ -117,7 +123,9 @@ class Fields:
             return False
         try:
             self.matrix_length = float(self.MATRIX_LENGTH_VAR.get().replace(',', '.'))
-            return True
+            if 1 < self.matrix_length < 36:
+                return True
+            messagebox.showinfo("Помилка", "Довжина матриці має бути в межах від 2 до 35 міліметрів")
         except ValueError:
             messagebox.showinfo("Помилка", "Довжина фотосенсору має бути числом")
 
@@ -127,7 +135,9 @@ class Fields:
             return False
         try:
             self.battery_flight_spending = float(self.BATTERY_FLIGHT_SPENDING_VAR.get().replace(',', '.'))
-            return True
+            if 0 < self.battery_flight_spending < 101:
+                return True
+            messagebox.showinfo("Помилка", "Витрати заряду на фото мають бути в межах від 1 до 100 %")
         except ValueError:
             messagebox.showinfo("Помилка", "Витрати заряду на політ має бути числом")
 
@@ -137,7 +147,9 @@ class Fields:
             return False
         try:
             self.battery_photo_spending = float(self.BATTERY_PHOTO_SPENDING_VAR.get().replace(',', '.'))
-            return True
+            if 0 < self.battery_photo_spending < 101:
+                return True
+            messagebox.showinfo("Помилка", "Витрати заряду на політ мають бути в межах від 1 до 100 %")
         except ValueError:
             messagebox.showinfo("Помилка", "Витрати заряду на фото має бути числом")
 
@@ -147,7 +159,9 @@ class Fields:
             return False
         try:
             self.territory_length = float(self.TERRITORY_LENGTH_VAR.get().replace(',', '.'))
-            return True
+            if 99 < self.territory_length < 600:
+                return True
+            messagebox.showinfo("Помилка", "Довжина території має бути в межах від 100 до 600 метрів")
         except ValueError:
             messagebox.showinfo("Помилка", "Довжина території має бути числом")
 
@@ -157,7 +171,9 @@ class Fields:
             return False
         try:
             self.territory_width = float(self.TERRITORY_WIDTH_VAR.get().replace(',', '.'))
-            return True
+            if 99 < self.territory_width < 600:
+                return True
+            messagebox.showinfo("Помилка", "Ширина території має бути в межах від 100 до 600 метрів")
         except ValueError:
             messagebox.showinfo("Помилка", "Ширина території має бути числом")
 
@@ -167,7 +183,9 @@ class Fields:
             return False
         try:
             self.battery = float(self.BATTERY_VAR.get().replace(',', '.'))
-            return True
+            if 0 < self.battery < 101:
+                return True
+            messagebox.showinfo("Помилка", "Заряд аккумулятора має бути в межах від 1 до 100 %")
         except ValueError:
             messagebox.showinfo("Помилка", "Значення заряду має бути числом")
 
