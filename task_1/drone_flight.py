@@ -217,13 +217,13 @@ while not done:
             done = True
     if not done2:
         if takeoff:
-            if takeofftimes == 50:
+            if takeofftimes == fields.allowed_height:
                 takeoff = False
                 takeofftimes = 0
             drone.battery -= fields.battery_flight_spending
             takeofftimes += 1
         if landing:
-            if landingtimes == 50:
+            if landingtimes == fields.allowed_height:
                 done2 = True
                 landing = False
                 move = False
