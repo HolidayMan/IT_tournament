@@ -7,7 +7,7 @@ from math_functions import Vector, export_cordinates, Point, calculate_move_vect
 from map_building import Map
 import os
 
-# gui.w_parametrs.mainloop()
+gui.w_parametrs.mainloop()
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -22,15 +22,15 @@ AMARANT_MAGENTA = (223, 48, 214)
 CYAN = (48, 218, 223)
 
 
-fields.allowed_height = 50
-fields.focus_distance = 4
-fields.matrix_width = 4
-fields.matrix_length = 3
-fields.battery_flight_spending = 0.01
-fields.battery_photo_spending = 0.2
-fields.territory_width = 300
-fields.territory_length = 125
-fields.battery = 100
+# fields.allowed_height = 50
+# fields.focus_distance = 4
+# fields.matrix_width = 4
+# fields.matrix_length = 3
+# fields.battery_flight_spending = 0.01
+# fields.battery_photo_spending = 0.2
+# fields.territory_width = 200
+# fields.territory_length = 500
+# fields.battery = 100
 
 
 class Drone:
