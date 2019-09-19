@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
-
+from math import ceil
+from math_functions import Vector, Point
+import sys
 
 w_parametrs = Tk()
 w_parametrs.title('Enter parametrs')
@@ -193,8 +195,54 @@ class Fields:
     def calculate(self, instance):
         if self.validate_allowed_height() and self.validate_focus_distance() and self.validate_matrix_width() and self.validate_matrix_length() \
         and self.validate_battery_flight_spending() and self.validate_battery_photo_spending() and self.validate_territory_length() and self.validate_territory_width() and self.validate_battery():
-            w_parametrs.destroy()
+            base = Point(50, 50, (0, 0, 0))
+
+            l1 = min(self.territory_length, self.territory_width)
+            l2 = max(self.territory_length, self.territory_width)
+
+
+            h = self.allowed_height
+            F = self.focus_distance
+            A1 = min(self.matrix_width, self.matrix_length) # геометрия
+            A2 = max(self.matrix_width, self.matrix_length) # матрицы
+
+            b = self.battery 
+            bph = self.battery_photo_spending # затраты на фото
+            bfl = self.battery_flight_spending # затраты на полет
+
+            L1 = int((A1*h)/F)
+            L2 = int((A2*h)/F)
+
+            PH_P = ceil(l2/L1) # фото на проход
+            KP = ceil(l1/L2) # кол-во проходов
+            K_PH = PH_P * KP # кол-во фото
+
+            bph_all = K_PH*(bph+bfl) # затраты на фото
+
+            x1 = L2/2 + 50
+            y1 = L1/2 + 50
+            x2 = x1 + L2*(KP-1)
+            y2 = y1
+            x3 = x2
+            y3 = y1 + L1 * PH_P - L1
+
+
+            s = Vector(x1-base.x, y1-base.y)
+            e = Vector(base.x-x2, base.y-y2) if KP % 2 == 0 else Vector(base.x-x3, base.y-y3)
+
+            l_all = 2*h + abs(s) + L1 * PH_P * KP + L2 * (KP - 1) + abs(e)
+            bfl_all = l_all * bfl
+
+            b_all = bph_all + bfl_all
+
+            if b_all < b:
+                w_parametrs.destroy()
+            else:
+                messagebox.showinfo("Неможливо", "Неможливий обліт з такими даними")
+                
+
+
 
 
 fields = Fields()
-w_parametrs.protocol("WM_DELETE_WINDOW", exit)
+w_parametrs.protocol("WM_DELETE_WINDOW", sys.exit)
