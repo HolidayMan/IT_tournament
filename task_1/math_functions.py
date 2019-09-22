@@ -43,4 +43,6 @@ def export_cordinates(coordinates):
 
 def calculate_move_vector(v, px):
     v_dots_amount = abs(v) / px
+    if  v_dots_amount == 0:
+        v_dots_amount = 1
     return (v / v_dots_amount, int(v_dots_amount))
