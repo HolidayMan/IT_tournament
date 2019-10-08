@@ -1,0 +1,2 @@
+First norm: 3804090.382751121 / per pixel: 75.1425260790345
+Second norm: 50625.0 / per pixel: 1.0

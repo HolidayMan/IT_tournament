@@ -138,7 +138,6 @@ pygame.init()
 size = (int(l1 + 50 + 400), int(l2 + 50 + 200))
 
 screen = pygame.display.set_mode(size)
-# bg = pygame.image.load("Droneshot.JPG")
  
 pygame.display.set_caption("Drone travel")
  
